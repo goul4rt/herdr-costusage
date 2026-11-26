@@ -1,19 +1,20 @@
 # Herdr CostUsage (`herdr-costusage`)
 
-A unified [Herdr](https://herdr.dev) **layout + standalone mod** for tracking AI agent usage, quota windows, local token costs, and macOS system telemetry from a clean `28px` bottom status bar, quick drill-down popover, and `840×616` native inspector dialog.
+A unified [Herdr](https://herdr.dev) **layout + standalone mod** repository structured for both Herdr Gallery feeds (`herdr-layout` + `herdr-mod`):
 
-![CostUsage](preview.png)
+- [`costusage/`](costusage/) — Full workspace layout (`layouts/costusage.json` + `mods/usage-meter/`) keeping Herdr's native sidebar (`Spaces` + `Agents`) untouched with a `28px` bottom usage & telemetry bar.
+- [`usage-meter/`](usage-meter/) — Standalone mod (`mods/usage-meter/` + `keys.json`) to drop into any custom Herdr layout.
+
+![CostUsage](costusage/preview.png)
 
 ## Features
 
-- **Clean Workspace Layout (`layouts/costusage.json`):** Keeps Herdr's native sidebar (`Spaces` + `Agents`) completely untouched while docking `usage-meter` across a unified `28px` bottom status slot.
-- **Standalone Mod (`mods/usage-meter/`):** Drop into any custom Herdr layout or install together with `costusage.json`.
 - **Multi-Provider & Multi-Account Tracking:**
   - **Claude Code** (auto-discovers multiple profiles like `~/.claude`, `~/.claude-*`, Keychain credentials, emails, and plans).
   - **LiteLLM / Harness Gateways** (isolates local/proxy models such as `ollama-*`, `kiro-*`, etc. at `$0.00` without distorting Anthropic API cost stats).
   - **Antigravity** (live Gemini + Claude/GPT quota bars and active model/conversation detection).
   - **Codex, OpenCode & Extra CLIs** (`Gemini CLI`, `Kimi`, `Grok`, `Cursor` auto-detection).
-- **Quick Popover & Full Inspector (`840×616`):**
+- **Quick Popover & Inspector (`840×616`):**
   - `Detailed` / `Compact` modes, `Used` / `Left` toggles, interactive provider drill-down.
   - 35-day activity intensity heatmap, token mix bar, unified 4-cell KPI strips, 14-day chart, top models/projects, and live macOS CPU/RAM/Ports (`lsof`).
 - **Granular Customization & i18n:**
@@ -21,23 +22,23 @@ A unified [Herdr](https://herdr.dev) **layout + standalone mod** for tracking AI
 
 ## Installation
 
-### Option A: Full Layout (`costusage` + `usage-meter`)
+### Option A: Full Layout (`costusage/`)
 
 ```bash
-cp layouts/costusage.json ~/.config/herdr-app/layouts/costusage.json
-cp -R mods/usage-meter ~/.config/herdr-app/mods/usage-meter
+cp costusage/layouts/costusage.json ~/.config/herdr-app/layouts/costusage.json
+cp -R costusage/mods/usage-meter ~/.config/herdr-app/mods/usage-meter
 herdr-app check ~/.config/herdr-app/mods/usage-meter
 herdr-app do layout.switch --name costusage
 ```
 
 *(Use `Cmd+Shift+L` anytime to switch between layouts.)*
 
-### Option B: Standalone Mod Only (`usage-meter` in your own layout)
+### Option B: Standalone Mod Only (`usage-meter/`)
 
 1. Copy the mod and validate:
 
    ```bash
-   cp -R mods/usage-meter ~/.config/herdr-app/mods/usage-meter
+   cp -R usage-meter/mods/usage-meter ~/.config/herdr-app/mods/usage-meter
    herdr-app check ~/.config/herdr-app/mods/usage-meter
    ```
 
@@ -60,7 +61,7 @@ herdr-app do layout.switch --name costusage
    }
    ```
 
-3. *(Optional)* Merge [`keys.json`](keys.json) (`alt-u` / `alt-shift-u`) into `~/.config/herdr-app/keys.json`.
+3. *(Optional)* Merge [`usage-meter/keys.json`](usage-meter/keys.json) (`alt-u` / `alt-shift-u`) into `~/.config/herdr-app/keys.json`.
 
 ## Commands
 
@@ -70,6 +71,7 @@ Available via `keys.json` or `herdr-app do`:
 - `usage-meter.details` — Open Usage Overview inspector (`alt-shift-u`)
 - `usage-meter.claude` / `usage-meter.all` — Open Overview filtered by Claude / All providers
 - `usage-meter.agents` / `usage-meter.ports` / `usage-meter.settings` — Jump directly to specific inspector sections
+- `usage-meter.lang:auto` / `en` / `pt` / `es` — Switch interface language
 - `usage-meter.refresh` — Trigger immediate usage & quota refresh
 - `usage-meter.toggle_bar` — Collapse/expand the bottom status bar
 
