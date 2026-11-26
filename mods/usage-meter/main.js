@@ -449,6 +449,7 @@ export default class UsageMeter extends View {
           else if (cmd === "settings") this.openDetails("settings");
           else if (cmd === "toggle_bar") patchPrefs({ barCollapsed: !readPrefs().barCollapsed });
           else if (cmd === "toggle_sidebar") this.toggleSidebarSection();
+          else if (cmd.startsWith("lang:")) patchPrefs({ language: cmd.slice(5) });
           cx.notify();
         }
       });
